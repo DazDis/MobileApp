@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6889553707761293331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.83226275}
-  m_AnchorMax: {x: 1, y: 0.9083893}
-  m_AnchoredPosition: {x: 0.78271484, y: -240.57458}
-  m_SizeDelta: {x: 1.5653076, y: 5.383423}
+  m_AnchorMin: {x: 0, y: 0.74784243}
+  m_AnchorMax: {x: 1, y: 0.812179}
+  m_AnchoredPosition: {x: 0.78271484, y: -0.5584717}
+  m_SizeDelta: {x: 1.5653, y: -4.6488953}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6781851603265267231
 CanvasRenderer:
@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 3346760323364619272}
   - component: {fileID: 416063020882866551}
   - component: {fileID: 5588034302265739114}
+  - component: {fileID: 4449581134896456820}
   m_Layer: 5
   m_Name: AddictWindow
   m_TagString: Untagged
@@ -245,6 +246,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4449581134896456820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062316660851741436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb3ff3cc6edac44286bed894b5db046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HabitDetailWindow
+  _nameText: {fileID: 4424992870498203158}
+  _descriptionText: {fileID: 3308304129091001844}
+  _timerText: {fileID: 4068351275474307581}
+  _backButton: {fileID: 6383134314927134622}
+  _resetButton: {fileID: 2440368159293109780}
 --- !u!1 &3789374800192333761
 GameObject:
   m_ObjectHideFlags: 0
