@@ -48,7 +48,6 @@ public class AddHabitWindow : WindowBase
     {
         var habit = new HabitData
         {
-            Id = Guid.NewGuid().ToString(),
             Name = preset.Name,
             Description = preset.Description,
             StartUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()

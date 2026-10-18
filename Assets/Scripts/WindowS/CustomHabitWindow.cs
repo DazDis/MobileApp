@@ -41,7 +41,6 @@ public class CustomHabitWindow : WindowBase
 
         var habit = new HabitData
         {
-            Id = Guid.NewGuid().ToString(),
             Name = name,
             Description = _descriptionInput.text.Trim(),
             StartUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()

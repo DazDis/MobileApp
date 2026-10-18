@@ -1,13 +1,17 @@
+using SQLite;
 using System;
+using UnityEngine;
 
-[Serializable]
 public class HabitData
 {
-    public string Id;
-    public string Name;
-    public string Description;
-    public long StartUnixTime;  
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
 
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public long StartUnixTime { get; set; }
+
+    [Ignore]
     public TimeSpan Elapsed
     {
         get
