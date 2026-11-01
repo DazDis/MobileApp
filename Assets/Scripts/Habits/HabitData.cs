@@ -10,6 +10,7 @@ public class HabitData
     public string Name { get; set; }
     public string Description { get; set; }
     public long StartUnixTime { get; set; }
+    public long CreationUnixTime { get; set; }
 
     [Ignore]
     public TimeSpan Elapsed

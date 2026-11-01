@@ -29,6 +29,7 @@ public class HabitRepository : MonoBehaviour
         _db = new SQLiteConnection(_dbPath);
 
         _db.CreateTable<HabitData>();
+        _db.CreateTable<HabitLogData>();
 
         LoadHabits();
     }
@@ -36,6 +37,22 @@ public class HabitRepository : MonoBehaviour
     private void LoadHabits()
     {
         _habits = _db.Table<HabitData>().ToList();
+
+        bool needsUpdate = false;
+        foreach (var habit in _habits)
+        {
+            if (habit.CreationUnixTime == 0)
+            {
+                habit.CreationUnixTime = habit.StartUnixTime;
+                _db.Update(habit);
+                needsUpdate = true;
+            }
+        }
+
+        if (needsUpdate)
+        {
+            Debug.Log("База данных обновлена: установлено время создания для старых привычек.");
+        }
     }
 
     public void Add(HabitData habit)
@@ -66,5 +83,29 @@ public class HabitRepository : MonoBehaviour
     private void OnDestroy()
     {
         _db?.Close();
+    }
+
+    public void AddLog(HabitLogData log)
+    {
+        _db.Insert(log);
+    }
+
+    public List<HabitLogData> GetLogsForHabit(int habitId)
+    {
+        return _db.Table<HabitLogData>()
+                  .Where(x => x.HabitId == habitId)
+                  .OrderByDescending(x => x.DayNumber)
+                  .ToList();
+    }
+
+    public HabitLogData GetLog(int habitId, int dayNumber)
+    {
+        return _db.Table<HabitLogData>()
+                  .FirstOrDefault(x => x.HabitId == habitId && x.DayNumber == dayNumber);
+    }
+
+    public void UpdateLog(HabitLogData log)
+    {
+        _db.Update(log);
     }
 }

@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &278404420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 278404422}
+  - component: {fileID: 278404421}
+  m_Layer: 0
+  m_Name: ConnectionClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &278404421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278404420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df907196036b7d4098e6e0c79ac052f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HabitClient
+--- !u!4 &278404422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278404420}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 593.51697, y: 991.4349, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &388989701
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 855850321}
   - component: {fileID: 855850320}
+  - component: {fileID: 855850322}
   m_Layer: 0
   m_Name: WindowService
   m_TagString: Untagged
@@ -575,6 +620,8 @@ MonoBehaviour:
     Prefab: {fileID: 6265356106764462654, guid: 7a6bd4e0875947f4284a98c11c20c639, type: 3}
   - Type: 3
     Prefab: {fileID: 4449581134896456820, guid: d24c52246bf873f4faa20dd9d392a579, type: 3}
+  - Type: 2
+    Prefab: {fileID: 6943265391092061471, guid: 8398c1259dd42b3449bb74ca0f4830cf, type: 3}
   _defaultWindow: 0
 --- !u!4 &855850321
 Transform:
@@ -591,6 +638,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &855850322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855850319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60aeb5d804f04384cabc5f176bdb0c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MobileBackButtonHandler
 --- !u!1 &1901682264
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1b13fe2665ad04180a18db4a70346c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HabitRepository
-  _habits: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -646,3 +704,4 @@ SceneRoots:
   - {fileID: 554311909}
   - {fileID: 855850321}
   - {fileID: 1901682265}
+  - {fileID: 278404422}

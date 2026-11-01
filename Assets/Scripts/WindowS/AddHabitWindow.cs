@@ -39,20 +39,53 @@ public class AddHabitWindow : WindowBase
 
         foreach (var preset in _regularHabits)
         {
+            var isAlreadyChecking = false;
+            foreach (var existingHabit in HabitRepository.Instance.Habits)
+            {
+                if (existingHabit.Name.Equals(preset.Name, StringComparison.OrdinalIgnoreCase))
+                { isAlreadyChecking = true; }
+            }
+            if (isAlreadyChecking) continue;
+
             var item = Instantiate(_regularItemPrefab, _regularListContent);
             item.Bind(preset, OnRegularSelected);
+
+            HabitClient.Instance.GetHabitCount(preset.Name, (count) =>
+            {
+                if (item != null)
+                {
+                    item.SetCount(count);
+                }
+            });
         }
     }
 
     private void OnRegularSelected(RegularHabitPreset preset)
     {
+        foreach (var existingHabit in HabitRepository.Instance.Habits)
+        {
+            if (existingHabit.Name.Equals(preset.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                Debug.LogWarning($"Привычка '{preset.Name}' уже добавлена!");
+                return; 
+            }
+        }
+
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
         var habit = new HabitData
         {
-            Name = preset.Name,
+            Name = preset.Name, 
             Description = preset.Description,
-            StartUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            StartUnixTime = now,
+            CreationUnixTime = now 
         };
+
         HabitRepository.Instance.Add(habit);
+
+        HabitClient.Instance.SendHabitToServer(habit.Name);
+
         WindowService.Instance.ResetTo(WindowType.HabitList);
     }
+
 }

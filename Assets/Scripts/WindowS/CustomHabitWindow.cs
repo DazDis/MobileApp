@@ -11,6 +11,7 @@ public class CustomHabitWindow : WindowBase
     [SerializeField] private TMP_InputField _descriptionInput;
     [SerializeField] private Button _createButton;
     [SerializeField] private Button _backButton;
+    [SerializeField] private TMP_Text _additionalText;
 
     private void Awake()
     {
@@ -38,14 +39,24 @@ public class CustomHabitWindow : WindowBase
     {
         var name = _nameInput.text.Trim();
         if (string.IsNullOrEmpty(name)) return;
-
+        foreach (var existingHabit in HabitRepository.Instance.Habits)
+        {
+            if (existingHabit.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                _additionalText.text = "Такая привычка уже есть в списке!";
+                return;
+            }
+        }
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var habit = new HabitData
         {
             Name = name,
             Description = _descriptionInput.text.Trim(),
-            StartUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            StartUnixTime = now,
+            CreationUnixTime = now
         };
         HabitRepository.Instance.Add(habit);
+        HabitClient.Instance.SendHabitToServer(habit.Name);
         WindowService.Instance.ResetTo(WindowType.HabitList);
     }
 }

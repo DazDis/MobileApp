@@ -7,6 +7,7 @@ public class RegularHabitItemView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _countText;
     [SerializeField] private Button _button;
 
     private AddHabitWindow.RegularHabitPreset _preset;
@@ -19,9 +20,21 @@ public class RegularHabitItemView : MonoBehaviour
         _onClick = onClick;
 
         _nameText.text = preset.Name;
-        if (_icon != null && preset.Icon != null) _icon.sprite = preset.Icon;
+        if (_icon != null && preset.Icon != null) { _icon.sprite = preset.Icon; }
+        else { 
+            Color c = _icon.color;
+            c.a = 0;
+            _icon.color = c;
+        }
 
         _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(() => _onClick?.Invoke(_preset));
+    }
+    public void SetCount(int count)
+    {
+        if (_countText != null)
+        {
+            _countText.text = $"{count} чел.";
+        }
     }
 }
