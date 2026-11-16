@@ -26,11 +26,19 @@ public class HabitDetailWindow : WindowBase
     private Coroutine _timerRoutine;
     private List<HabitLogItemView> _spawnedLogs = new();
 
+    [Header("Экспорт")]
+    [SerializeField] private Button _exportButton;
+    [SerializeField] private TMP_Text _exportStatusText; 
     private void Awake()
     {
         _backButton.onClick.AddListener(() => WindowService.Instance.Back());
         _resetButton.onClick.AddListener(OnResetClicked);
         _deleteButton.onClick.AddListener(OnDeleteClicked);
+        if (_exportButton != null)
+            _exportButton.onClick.AddListener(OnExportClicked);
+
+        if (_exportStatusText != null)
+            _exportStatusText.gameObject.SetActive(false);
     }
 
     public void SetHabit(HabitData habit) => _habit = habit;
@@ -132,5 +140,54 @@ public class HabitDetailWindow : WindowBase
     {
         HabitRepository.Instance.Remove(_habit);
         WindowService.Instance.ResetTo(WindowType.HabitList);
+    }
+
+    private void OnExportClicked()
+    {
+        if (_habit == null) return;
+
+        var logs = HabitRepository.Instance.GetLogsForHabit(_habit.Id);
+
+        if (logs == null || logs.Count == 0)
+        {
+            ShowStatus("Нет данных для экспорта", Color.yellow);
+            return;
+        }
+
+        string path = HabitExporter.ExportToCSV(_habit, logs);
+
+        if (!string.IsNullOrEmpty(path))
+        {
+            ShowStatus("Файл создан. Открываем меню...", Color.green);
+            Debug.Log($"Путь к файлу: {path}");
+
+            new NativeShare()
+                .AddFile(path)
+                .SetSubject("Статистика от трекера")
+                .SetText("Моя статистика по привычке: " + _habit.Name)
+                .Share();
+        }
+        else
+        {
+            ShowStatus("Ошибка при создании файла", Color.red);
+        }
+    }
+
+    private void ShowStatus(string message, Color color)
+    {
+        if (_exportStatusText == null) return;
+
+        StopCoroutine(nameof(HideStatusRoutine));
+        _exportStatusText.text = message;
+        _exportStatusText.color = color;
+        _exportStatusText.gameObject.SetActive(true);
+
+        StartCoroutine(nameof(HideStatusRoutine));
+    }
+
+    private IEnumerator HideStatusRoutine()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        if (_exportStatusText != null) _exportStatusText.gameObject.SetActive(false);
     }
 }

@@ -3,14 +3,30 @@ using UnityEngine.InputSystem;
 
 public class MobileBackButtonHandler : MonoBehaviour
 {
-    private void Update()
+    private InputAction _backAction;
+
+    private void Awake()
     {
-        if (Keyboard.current != null && Keyboard.current.escapeKey.isPressed)
+        // Создаём действие, привязанное к клавише Escape (эмуляция кнопки "Назад")
+        _backAction = new InputAction(binding: "<Keyboard>/escape");
+        _backAction.performed += OnBackPressed;
+    }
+
+    private void OnEnable()
+    {
+        _backAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _backAction.Disable();
+    }
+
+    private void OnBackPressed(InputAction.CallbackContext context)
+    {
+        if (WindowService.Instance != null)
         {
-            if (Time.frameCount % 2 == 0)
-            {
-                WindowService.Instance.Back();
-            }
+            WindowService.Instance.Back();
         }
     }
 }
